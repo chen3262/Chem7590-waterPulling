@@ -1,0 +1,75 @@
+; define              =  -DPOSRES
+constraints         =  none
+integrator          =  md
+emstep              =  0.001
+emtol               =  0.01
+;
+; Center of mass removal ------------------------------------------
+comm_mode           =  linear    ; Change for no pbc
+comm_grps           =  System
+nstcomm             =  100        ; freq of center of mass removal
+;
+; Time steps ------------------------------------------------------
+dt                  =  0.001    ; ps !
+nsteps              =  180000   ;  
+;
+; Output control ---------------------------------------------------
+nstxout             =  1000       ; freq of coord output to trr
+nstvout             =  0          ; freq of velocity output to trr
+nstfout             =  0          ; freq of force output to trr
+nstlog              =  1000        ; freq of output to log file
+nstenergy           =  100        ; default of -1 sets equal to nstlist
+;
+; Neighbor list and pbc's ------------------------------------------
+nstlist             =  10        ; default is 10
+ns_type             =  grid     ; simple (for no pbc) or grid
+;
+pbc                 =  xyz      ; CHANGE
+periodic_molecules  =  no
+;
+; Interaction parameters -------------------------------------------
+rlist               =  1
+rcoulomb            =  1
+;
+coulombtype         =  pme
+epsilon_r           =  1
+;
+vdwtype             =  cut-off
+rvdw                =  1
+DispCorr            =  EnerPres ;  no or EnerPres
+;
+energygrps          = System
+;freezegrps          = freeze
+;freezedim           = Y Y Y
+;energygrp_excl      = freeze freeze
+;
+;  temperature coupling is on ----------------------------------
+Tcoupl              =  v-rescale  ;no or v-rescale berendsen nose-hoover
+tau_t               =  0.3
+tc-grps             =  System
+ref_t               =  298.00
+; Pressure coupling is on --------------------------------------
+Pcoupl              =  no ;Parrinello-Rahman ; no or berendsen Parrinello-Rahman
+tau_p               =  .6
+pcoupltype          =  isotropic ;   isotropic anisotropic
+compressibility     =  4.5e-5  4.5e-5  4.5e-5  
+ref_p               =  1.0 1.0 1.0
+; Pull code --------------------------------------------------
+pull			= yes
+pull_coord1_type	= constraint ;constant-force
+pull_coord1_geometry	= distance ;direction-periodic ;distance
+pull_coord1_dim 	= Y Y Y
+pull-group1-name        = target
+pull-group2-name        = ref
+pull-ngroups            = 2
+pull-ncoords            = 1
+pull-coord1-groups      = 1 2
+pull_coord1_rate	= 0.005 ; nm per ps
+pull_coord1_start       = yes
+pull-nstxout            = 100
+pull-nstfout            = 100
+
+; Generate velocites -------------------------------------------
+gen_vel             =  yes
+gen_temp            =  5
+gen_seed            =  173529

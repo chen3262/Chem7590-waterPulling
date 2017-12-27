@@ -1,0 +1,18 @@
+[ defaults ]
+; nbfunc	comb-rule	gen-pairs	fudgeLJ	fudgeQQ
+  1	1		no		1.0	1.0
+
+[ atomtypes ]
+;name  at.num  mass     charge   ptype    c6(kJ nm^6/mol)) c12(kJ nm^12/mol)
+    OW   8   15.9994    -0.8476   A       0.2617e-2       0.2634e-5
+     H   8   1.00794    -0.4238   A       0.0             0.0
+
+#include "spce.itp"
+
+[ system ]
+; Name
+spce water
+
+[ molecules ]
+; Compound        #mols
+SOL               510
